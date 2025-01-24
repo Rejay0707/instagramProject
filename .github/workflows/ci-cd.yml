@@ -29,12 +29,14 @@ jobs:
           PORT: ${{ secrets.PORT }} 
 
       - name: Start backend server
+        shell: pwsh
         run: |
-          npm start &
-          SERVER_PID=$!
-          sleep 10 # Wait for the server to start
+          # Start the server in the background
+          Start-Process -NoNewWindow -FilePath "npm" -ArgumentList "start"
+          $serverPID = $PID # Store the process ID
+          Start-Sleep -Seconds 10 # Wait for the server to start
           npm test
-          kill $SERVER_PID
+          Stop-Process -Id $serverPID # Stop the server
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
