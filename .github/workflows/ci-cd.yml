@@ -32,7 +32,6 @@ jobs:
 
       - name: Run tests
         run: |
-          npx wait-on http://localhost:${{ secrets.PORT }}
           npm test
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
