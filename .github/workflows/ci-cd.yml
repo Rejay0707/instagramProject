@@ -24,7 +24,7 @@ jobs:
       - name: Start backend server
         run: |
           npm start &
-          sleep 10 # Wait for the server to start
+          sleep 20 # Wait for the server to start
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
