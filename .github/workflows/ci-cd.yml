@@ -32,7 +32,7 @@ jobs:
         shell: pwsh
         run: |
           # Start the server in the background
-          Start-Process -NoNewWindow -FilePath "npm" -ArgumentList "start"
+          Start-Process -NoNewWindow -FilePath "$env:ProgramFiles\nodejs\npm.cmd" -ArgumentList "start"
           $serverPID = $PID # Store the process ID
           Start-Sleep -Seconds 10 # Wait for the server to start
           npm test
