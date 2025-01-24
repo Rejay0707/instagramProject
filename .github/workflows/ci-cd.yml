@@ -26,10 +26,11 @@ jobs:
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }} 
           JWT_SECRET: ${{ secrets.JWT_SECRET }} 
+          PORT: ${{ secrets.PORT }} 
 
       - name: Start backend server
         run: npm start
         env:
-          PORT: 5000
           MONGO_URI: ${{ secrets.MONGO_URI }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          PORT: ${{ secrets.PORT }}
