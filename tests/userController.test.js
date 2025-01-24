@@ -4,6 +4,8 @@ import User from "../model/userSchema.js";
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
 
+jest.setTimeout(30000);
+
 describe("User Registration and Login", () => {
   beforeAll(async () => {
     await mongoose.connect(process.env.MONGO_URI, {
@@ -147,4 +149,4 @@ describe("User Registration and Login", () => {
       expect(res.body).toHaveProperty("message");
     });
   });
-});
+}); 
