@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon server.js",
-    "test":"jest"
+    "test": "jest"
   },
   "author": "rejay",
   "license": "ISC",
@@ -20,7 +20,8 @@
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.9.5",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "wait-on": "^8.0.2"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.26.0",

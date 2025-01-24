@@ -21,10 +21,21 @@ jobs:
       - name: Install backend dependencies
         run: npm install
 
-      - name: Start backend server and run tests
+      - name: Start backend server
         run: |
-          npx concurrently "npm start" "npx wait-on http://localhost:${{ secrets.PORT }} && npm test"
+          npm start &
+          sleep 10 # Wait for the server to start
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           PORT: ${{ secrets.PORT }}
+
+      - name: Run tests
+        run: |
+          npx wait-on http://localhost:${{ secrets.PORT }}
+          npm test
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          PORT: ${{ secrets.PORT }}
+
