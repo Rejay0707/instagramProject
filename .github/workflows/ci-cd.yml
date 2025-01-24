@@ -29,7 +29,12 @@ jobs:
           PORT: ${{ secrets.PORT }} 
 
       - name: Start backend server
-        run: npm start
+        run: |
+          npm start &
+          SERVER_PID=$!
+          sleep 10 # Wait for the server to start
+          npm test
+          kill $SERVER_PID
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
