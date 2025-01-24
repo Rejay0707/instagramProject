@@ -21,22 +21,9 @@ jobs:
       - name: Install backend dependencies
         run: npm install
 
-      - name: Run backend tests
-        run: npm test
-        env:
-          MONGO_URI: ${{ secrets.MONGO_URI }} 
-          JWT_SECRET: ${{ secrets.JWT_SECRET }} 
-          PORT: ${{ secrets.PORT }} 
-
-      - name: Start backend server
-        shell: pwsh
+      - name: Start backend server and run tests
         run: |
-          # Start the server in the background
-          Start-Process -NoNewWindow -FilePath "$env:ProgramFiles\nodejs\npm.cmd" -ArgumentList "start"
-          $serverPID = $PID # Store the process ID
-          Start-Sleep -Seconds 10 # Wait for the server to start
-          npm test
-          Stop-Process -Id $serverPID # Stop the server
+          npx concurrently "npm start" "npx wait-on http://localhost:${{ secrets.PORT }} && npm test"
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
