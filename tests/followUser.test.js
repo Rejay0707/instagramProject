@@ -42,17 +42,18 @@ describe('Follow User', () => {
     const user1 = await User.create({ username: 'user1', email: 'user1@example.com', password: 'hashedPassword' });
     const user2 = await User.create({ username: 'user2', email: 'user2@example.com', password: 'hashedPassword' });
 
-    // Debugging log
+    // Debugging log to check user IDs
     console.log("User1 ID:", user1._id);
     console.log("User2 ID:", user2._id);
 
     // Call the followUser function with the correct arguments
     const result = await followUser(user1._id, user2._id);
-    
+
     // Find the user1 after following to check if the follow action was successful
     const updatedUser1 = await User.findById(user1._id);
 
     // Check if user1 is following user2
+    console.log("Updated User1 following:", updatedUser1.following);
     expect(updatedUser1.following).toContainEqual(user2._id);
   });
 });
