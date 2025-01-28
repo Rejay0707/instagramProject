@@ -39,12 +39,19 @@ describe('Follow User', () => {
   });
 
   it('should allow a user to follow another user', async () => {
+    // Create two users
     const user1 = await User.create({ username: 'user1', email: 'user1@example.com', password: 'hashedPassword' });
     const user2 = await User.create({ username: 'user2', email: 'user2@example.com', password: 'hashedPassword' });
 
     // Debugging log to check user IDs
     console.log("User1 ID:", user1._id);
     console.log("User2 ID:", user2._id);
+
+    // Debugging: Check if users exist in the database
+    const userInDb1 = await User.findById(user1._id);
+    const userInDb2 = await User.findById(user2._id);
+    console.log("User1 from DB:", userInDb1);
+    console.log("User2 from DB:", userInDb2);
 
     // Call the followUser function with the correct arguments
     const result = await followUser(user1._id, user2._id);
