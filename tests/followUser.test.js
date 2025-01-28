@@ -7,7 +7,7 @@ jest.setTimeout(40000); // Set Jest timeout to 40 seconds
 describe('Follow User', () => {
   beforeAll(async () => {
     try {
-      await mongoose.connect('mongodb://127.0.0.1:27017/testdb', {
+      await mongoose.connect('mongodb+srv://rejaysobi:rejay123@cluster0.xw9gg.mongodb.net/', {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         serverSelectionTimeoutMS: 20000, // 20 seconds
