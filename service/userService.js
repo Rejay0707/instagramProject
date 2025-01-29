@@ -51,7 +51,8 @@ const getUser = async (req) => {
 
 
 
-const followUser = async (userId, followId) => {
+
+const followUser  = async (userId, followId) => {
   try {
     console.log("Attempting to follow user:", { userId, followId });
 
@@ -60,44 +61,48 @@ const followUser = async (userId, followId) => {
       throw new Error("Both userId and followId are required");
     }
 
+    // Convert string IDs to ObjectId
+    const userObjectId = new mongoose.Types.ObjectId(userId);
+    const followObjectId = new mongoose.Types.ObjectId(followId);
+
     // Check if user is trying to follow themselves
-    if (userId.equals(followId)) {
+    if (userObjectId.equals(followObjectId)) {
       throw new Error("Cannot follow yourself");
     }
 
     // Finding the user and the user to follow
     console.log("Finding user with ID:", userId);
-    const user = await User.findById(userId);
+    const user = await User.findById(userObjectId);
     if (!user) {
-      throw new Error(`User with ID ${userId} not found`);
+      throw new Error(`User  with ID ${userId} not found`);
     }
 
     console.log("Finding user to follow with ID:", followId);
-    const userToFollow = await User.findById(followId);
+    const userToFollow = await User.findById(followObjectId);
     if (!userToFollow) {
-      throw new Error(`User with ID ${followId} not found`);
+      throw new Error(`User  with ID ${followId} not found`);
     }
 
     // Ensure no duplicates in `following` and `followers`
-    if (!user.following.includes(followId.toString())) {
+    if (!user.following.includes(followObjectId.toString())) {
       console.log(`Adding user ${userId} to following list of ${followId}`);
-      user.following.push(followId);
+      user.following.push(followObjectId);
     }
 
-    if (!userToFollow.followers.includes(userId.toString())) {
+    if (!userToFollow.followers.includes(userObjectId.toString())) {
       console.log(`Adding user ${followId} to followers list of ${userId}`);
-      userToFollow.followers.push(userId);
+      userToFollow.followers.push(userObjectId);
     }
 
     // Save both users
     await Promise.all([user.save(), userToFollow.save()]);
 
-    console.log("User updated:", user);
-    console.log("UserToFollow updated:", userToFollow);
+    console.log("User  updated:", user);
+    console.log("User ToFollow updated:", userToFollow);
 
     return user;
   } catch (error) {
-    console.error("Error in followUser function:", error);
+    console.error("Error in followUser  function:", error);
     throw error;
   }
 };
